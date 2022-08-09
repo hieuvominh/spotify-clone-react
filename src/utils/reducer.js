@@ -1,5 +1,6 @@
 export const initialState = {
   token: null,
+  playlists: [],
 };
 
 const reducer = (state, action) => {
@@ -8,6 +9,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         token: action.token,
+      };
+    }
+    case "SET_PLAYLISTS": {
+      return {
+        ...state,
+        playlists: action.playlists,
       };
     }
     default:

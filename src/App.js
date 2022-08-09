@@ -17,5 +17,3 @@ export default function App() {
 
   return <div>{token ? <Spotify /> : <Login />}</div>;
 }
-
-// https://www.youtube.com/watch?v=ajVcLGEw8Xw&t=3231s&ab_channel=KishanSheth
