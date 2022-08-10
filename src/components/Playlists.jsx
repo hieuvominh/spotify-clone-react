@@ -17,6 +17,7 @@ function Playlists() {
         }
       );
       const { items } = response.data;
+      console.log(items);
       const playlists = items.map((playlist) => {
         return { name: playlist.name, url: playlist.name, id: playlist.id };
       });
@@ -29,7 +30,7 @@ function Playlists() {
   return (
     <Container>
       <ul>
-        {playlists.map((playlist) => {
+        {playlists?.map((playlist) => {
           return <li key={playlist.id}>{playlist.name}</li>;
         })}
       </ul>
