@@ -1,30 +1,32 @@
-import React from "react";
-import styled from "styled-components";
-import { FaSearch } from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
-import { useStateProvider } from "../utils/StateProvider";
+/** @format */
 
-function Navbar() {
+import React from 'react';
+import styled from 'styled-components';
+import { FaSearch } from 'react-icons/fa';
+import { CgProfile } from 'react-icons/cg';
+import { useStateProvider } from '../utils/StateProvider';
+
+function Navbar({ navBackGround }) {
   const [{ user }] = useStateProvider();
   return (
-    <Conteiner>
-      <div className="search_bar">
+    <Container navBackGround={navBackGround}>
+      <div className='search_bar'>
         <FaSearch />
-        <input type="text" placeholder="Search for Artists, songs, ..." />
+        <input type='text' placeholder='Search for Artists, songs, ...' />
       </div>
-      <div className="avatar">
-        <a href="#">
+      <div className='avatar'>
+        <a href='#'>
           <CgProfile />
           <span>{user?.userName}</span>
         </a>
       </div>
-    </Conteiner>
+    </Container>
   );
 }
 
 export default Navbar;
 
-const Conteiner = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +35,8 @@ const Conteiner = styled.div`
   position: sticky;
   top: 0;
   transition: 0.3s ease-in-out;
-  background-color: none;
+  background-color: ${({ navBackGround }) =>
+    navBackGround ? 'rgba(0,0,0,0.7)' : 'none'};
   .search_bar {
     background-color: white;
     width: 30%;

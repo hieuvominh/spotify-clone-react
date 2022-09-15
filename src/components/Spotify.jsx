@@ -1,21 +1,36 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import Body from "./Body";
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
-import Footer from "./Footer";
-import axios from "axios";
-import { useStateProvider } from "../utils/StateProvider";
+/** @format */
+
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+import Body from './Body';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import Footer from './Footer';
+import axios from 'axios';
+import { useStateProvider } from '../utils/StateProvider';
+import { ActionTypes } from '../utils/actionTypes';
 
 function Spotify() {
   const [{ token }, dispatch] = useStateProvider();
+  const bodyRef = useRef();
+  const [navBackGround, setNavBackGround] = useState(false);
+  const [headerBackGround, setHeaderBackGround] = useState(false);
+
+  const bodyScrolled = () => {
+    bodyRef.current.scrollTop >= 30
+      ? setNavBackGround(true)
+      : setNavBackGround(false);
+    bodyRef.current.scrollTop >= 268
+      ? setHeaderBackGround(true)
+      : setHeaderBackGround(false);
+  };
 
   useEffect(() => {
     const getUserData = async () => {
-      const response = await axios.get("https://api.spotify.com/v1/me", {
+      const response = await axios.get('https://api.spotify.com/v1/me', {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       const { data } = response;
@@ -24,23 +39,23 @@ function Spotify() {
         userName: data.display_name,
       };
 
-      dispatch({ type: "SET_USER", user });
+      dispatch({ type: ActionTypes.SET_USER, user });
     };
     getUserData();
   }, [token, dispatch]);
 
   return (
     <Container>
-      <div className="spotify_body">
+      <div className='spotify_body'>
         <Sidebar />
-        <div className="body">
-          <Navbar />
-          <div className="body_contents">
-            <Body />
+        <div className='body' ref={bodyRef} onScroll={bodyScrolled}>
+          <Navbar navBackGround={navBackGround} />
+          <div className='body_contents'>
+            <Body headerBackGround={headerBackGround} />
           </div>
         </div>
       </div>
-      <div className="spotify_footer">
+      <div className='spotify_footer'>
         <Footer />
       </div>
     </Container>
@@ -67,6 +82,12 @@ const Container = styled.div`
       height: 100%;
       width: 100%;
       overflow: auto;
+      &::-webkit-scrollbar {
+        width: 0.7rem;
+        &-thumb {
+          background-color: rgba(255, 255, 255, 0.6);
+        }
+      }
     }
   }
 `;
