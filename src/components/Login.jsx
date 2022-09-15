@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Login = () => {
   const handleClick = () => {
     const clientId = 'beb46e68143a4955896c23c334728a9f';
-    const redirectUrl = 'http://localhost:3000/';
+    const redirectUrl = 'https://spotify-clone-react-mu.vercel.app/';
     const apiUrl = 'https://accounts.spotify.com/authorize';
     const scope = [
       'user-read-email',
